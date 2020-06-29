@@ -19,3 +19,7 @@ Work in progress
 ### Azure Log Analytics
 
 Work in progress
+
+### Installation & Setup
+
+Installation is same as any other grafana  plugin. Download the repo and put it in your plugin folder. Configure the plugin Same as inbuilt azure monitor plugin.
