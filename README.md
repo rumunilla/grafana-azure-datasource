@@ -22,4 +22,4 @@ Work in progress
 
 ### Installation & Setup
 
-Installation is same as any other grafana  plugin. Download the repo and put it in your plugin folder. Configure the plugin Same as inbuilt azure monitor plugin.
+Installation is same as any other grafana  plugin. Download the repo and put it in your plugin folder. Make sure to restart the grafana after placing the plugin. Configure the plugin Same as inbuilt azure monitor plugin.
