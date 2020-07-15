@@ -1,6 +1,14 @@
-# Azure Monitor - Extras ( Grafana Datasource plugin for Azure )
+# Grafana Azure Monitor - Extras
 
 ![Build & Publish](https://github.com/yesoreyeram/grafana-azure-datasource/workflows/Build%20&%20Publish/badge.svg?branch=master)
+
+Grafana Azure monitor extras plugin provides additional azure capabilities to grafana.
+
+## Features
+
+* Azure Resource Graph
+* Azure Cost Analysis
+* Azure Service Health
 
 ### Azure Cost Analysis
 
@@ -10,18 +18,62 @@
 
 ![image](https://user-images.githubusercontent.com/153843/82420772-178b9c80-9a78-11ea-8294-2d0500aa3592.png)
 
-### Azure Service Health
+## Installation
 
-![image](https://user-images.githubusercontent.com/153843/83039982-abd89f00-a036-11ea-98ed-d7fd5dd69141.png)
+There are multiple ways to install this plugin
 
-### Azure Application Insights
+#### Download and extract zip file
 
-Work in progress
+Download the zip file from [github](https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip) and extract into your grafana's plugin folder. Then restart Grafana.
 
-### Azure Log Analytics
+#### Using grafana-cli
 
-Work in progress
+If you are using grafana-cli, execute the following command to install the plugin
 
-### Installation & Setup
+```
+grafana-cli --pluginUrl https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip plugins install yesoreyeram-grafana-azure-datasource
+```
+#### Using helm chart
 
-Installation is same as any other grafana  plugin. Download the repo and put it in your plugin folder. Make sure to restart the grafana after placing the plugin. Configure the plugin Same as inbuilt azure monitor plugin.
+If you use help chart to provision grafana, use the following config to install the plugin
+
+```
+plugins:
+  - https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip;yesoreyeram-grafana-azure-datasource
+```
+
+## Configuration
+
+Configuration of the plugin requires Tenant ID, Client ID and Client Secret.
+
+#### Provisioning via file
+
+If you want to use the grafana provisioning feature, use the following yaml
+
+```
+apiVersion: 1
+
+datasources:
+- name: <Datasource Name>
+  type: yesoreyeram-grafana-azure-datasource
+  access: proxy
+  isDefault: false
+  jsonData:
+       cloudName: azuremonitor
+       clientId: <Azure SPN ID>
+       tenantId: <Azure Tenant ID>
+  secureJsonData:
+       clientSecret: <Azure SPN Secret>
+  version: 1
+  readOnly: false
+```
+
+#### Azure Permissions / Roles 
+
+The client which connects to azure should have the following permissions.
+
+* [Monitoring Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#monitoring-reader) OR [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader)
+
+In case, if you are using the cost analysis services alone, provide only the following roles to the client
+
+* [Cost Management Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#cost-management-reader)
