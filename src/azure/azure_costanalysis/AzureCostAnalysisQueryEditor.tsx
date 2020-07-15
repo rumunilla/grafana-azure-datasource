@@ -41,6 +41,7 @@ const FilterTypes: SelectableValue[] = [
   { value: 'Dimensions', label: 'Dimensions' },
   { value: 'Tags', label: 'Tags' },
 ];
+const FilterOperators: SelectableValue[] = [{ value: 'In', label: 'In' }];
 
 class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
   state: any = defaults(this.state, { AzureSubscriptions: [] });
@@ -305,8 +306,8 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
     azCostAnalysis.filters[index].Name = filtername;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
-  onACAFilterOperatorChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-    const operatorname = event.target.value;
+  onACAFilterOperatorChange = (event: SelectableValue, index: number) => {
+    const operatorname = event.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
@@ -391,15 +392,13 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
                       />
                     </div>
                     <div className="gf-form gf-form--grow">
-                      <input
-                        type="text"
-                        className="gf-form-input width-12"
-                        title="Operator"
-                        placeholder="Operator"
-                        value={filter.Operator}
+                      <Select
+                        className="width-12"
+                        value={FilterOperators.find((op: any) => op.value === filter.Operator)}
+                        options={FilterOperators}
+                        defaultValue={filter.Operator}
                         onChange={e => this.onACAFilterOperatorChange(e, index)}
-                        disabled
-                      ></input>
+                      />
                     </div>
                     <div className="gf-form gf-form--grow">
                       <input
@@ -436,15 +435,13 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
                       ></input>
                     </div>
                     <div className="gf-form gf-form--grow">
-                      <input
-                        type="text"
-                        className="gf-form-input width-12"
-                        title="Operator"
-                        placeholder="Operator"
-                        value={filter.Operator}
+                      <Select
+                        className="width-12"
+                        value={FilterOperators.find((op: any) => op.value === filter.Operator)}
+                        options={FilterOperators}
+                        defaultValue={filter.Operator}
                         onChange={e => this.onACAFilterOperatorChange(e, index)}
-                        disabled
-                      ></input>
+                      />
                     </div>
                     <div className="gf-form gf-form--grow">
                       <input

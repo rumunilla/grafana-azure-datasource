@@ -91,7 +91,12 @@ export class AzureCostAnalysisQuery extends AzureMonitorPluginQuery {
     if (grouping && grouping.length > 0 && grouping[0].type === 'None') {
       delete this.data.dataSet.grouping;
     }
-    item.filters = item.filters.filter((f: AzureCostAnalysisFilter) => f && f.FilterType !== 'None');
+    item.filters = item.filters
+      .filter((f: AzureCostAnalysisFilter) => f && f.FilterType !== 'None')
+      .map((f: AzureCostAnalysisFilter) => {
+        f.Values = f.Values.map(v => v.trim());
+        return f;
+      });
     if (item.filters && item.filters.length > 0 && item.filters[0].FilterType !== 'None') {
       if (item.filters.length === 1) {
         const filteritem: any = {};
