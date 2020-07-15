@@ -1,5 +1,7 @@
 # Azure Monitor - Extras ( Grafana Datasource plugin for Azure )
 
+![Build & Publish](https://github.com/yesoreyeram/grafana-azure-datasource/workflows/Build%20&%20Publish/badge.svg?branch=master)
+
 ### Azure Cost Analysis
 
 ![image](https://user-images.githubusercontent.com/153843/82420435-9d5b1800-9a77-11ea-818e-7b57b0f6353c.png)
