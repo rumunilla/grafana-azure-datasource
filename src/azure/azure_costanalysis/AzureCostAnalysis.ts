@@ -3,6 +3,8 @@ import { AzureConnection } from '../azure_connection/AzureConnection';
 import { AzureCostAnalysisResultsParser } from './AzureCostAnalysisResultsParser';
 import { doBackendRequest } from '../../app/utils';
 
+type AzureScopeType = 'ManagementGroup' | 'Subscription';
+
 interface AzureCostAnalysisGrouping {
   type: string;
   name: string;
@@ -17,6 +19,8 @@ interface AzureCostAnalysisFilter {
 
 export interface AzureCostQueryStructure {
   alias: string;
+  scope: AzureScopeType;
+  managementGroupId: string;
   subscriptionId: string;
   subscriptionName?: string;
   granularity: string;
@@ -27,6 +31,8 @@ export interface AzureCostQueryStructure {
 
 export const DEFAULT_COST_QUERY: AzureCostQueryStructure = {
   alias: '',
+  scope: 'Subscription',
+  managementGroupId: '',
   subscriptionId: '',
   subscriptionName: '',
   granularity: 'Daily',
@@ -68,6 +74,9 @@ export class AzureCostAnalysisQuery extends AzureMonitorPluginQuery {
     this.granularity = templateSrv.replace(item.granularity || 'Monthly', options.scopedVars);
     this.rawquery = item;
     this.rawquery.alias = templateSrv.replace(this.rawquery.alias, options.scopedVars);
+    if (this.rawquery.scope === 'ManagementGroup') {
+      this.scope = templateSrv.replace(`/providers/Microsoft.Management/managementGroups/${item.managementGroupId}`, options.scopedVars);
+    }
     let grouping = [];
     grouping = item.grouping && item.grouping.length > 0 ? item.grouping : [{ type: 'Dimension', name: 'ServiceName' }];
     this.data = new AzureCostQueryDataParam(options.range, {

@@ -6,6 +6,10 @@ import { AzureConnection } from './../azure_connection/AzureConnection';
 import { AzureSubscription } from './../azure_subscription/AzureSubscription';
 import { AzureCostQueryStructure } from './AzureCostAnalysis';
 
+const Scopes: SelectableValue[] = [
+  { value: 'Subscription', label: 'Subscription' },
+  { value: 'ManagementGroup', label: 'Management Group' },
+];
 const Granularities: SelectableValue[] = [
   { value: 'None', label: 'None' },
   { value: 'Daily', label: 'Daily' },
@@ -29,6 +33,8 @@ const GroupingDimensions: SelectableValue[] = [
   { value: 'PricingModel', label: 'Pricing Model' },
   { value: 'PublisherType', label: 'Publisher Type' },
   { value: 'ChargeType', label: 'Charge Type' },
+  { value: 'SubscriptionId', label: 'Subscription ID' },
+  { value: 'SubscriptionName', label: 'Subscription Name' },
 ];
 const FilterTypes: SelectableValue[] = [
   { value: 'None', label: 'None' },
@@ -46,6 +52,19 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
     azCostAnalysis.subscriptionName = event.label;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
+  onACAScopeChange = (scope: SelectableValue) => {
+    const { query, onChange } = this.props;
+    const azCostAnalysis: any = query.azureCostAnalysis;
+    azCostAnalysis.scope = scope.value;
+    onChange({ ...query, azureCostAnalysis: azCostAnalysis });
+  };
+  onACAManagementGroupNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const MGGroupName = event.target.value;
+    const { query, onChange } = this.props;
+    const azCostAnalysis: any = query.azureCostAnalysis;
+    azCostAnalysis.managementGroupId = MGGroupName;
+    onChange({ ...query, azureCostAnalysis: azCostAnalysis });
+  };
   componentWillMount() {
     if (this.state.AzureSubscriptions.length === 0) {
       const az: AzureConnection = new AzureConnection(this.props.datasource.instanceSettings);
@@ -60,28 +79,76 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
   }
   render() {
     const { query } = this.props;
-    return (
-      <div className="gf-form-inline">
-        <div className="gf-form">
-          <div className="gf-form gf-form--grow">
-            <label className="gf-form-label width-12" title="Subscription">
-              Subscription
-            </label>
-            <Select
-              className="width-24"
-              value={
-                this.state.AzureSubscriptions.find((gran: any) => gran.value === query.azureCostAnalysis.subscriptionId) || {
-                  label: query.azureCostAnalysis.subscriptionId,
-                  value: query.azureCostAnalysis.subscriptionId,
-                }
-              }
-              allowCustomValue
-              options={this.state.AzureSubscriptions}
-              defaultValue={query.azureCostAnalysis.subscriptionId}
-              onChange={this.onACASubscriptionIDChange}
-            />
+    let ScopeId;
+    if (query.azureCostAnalysis.scope === 'Subscription') {
+      ScopeId = (
+        <div>
+          <div className="gf-form-inline">
+            <div className="gf-form">
+              <div className="gf-form gf-form--grow">
+                <label className="gf-form-label width-12" title="Subscription">
+                  Subscription
+                </label>
+                <Select
+                  className="width-24"
+                  value={
+                    this.state.AzureSubscriptions.find((gran: any) => gran.value === query.azureCostAnalysis.subscriptionId) || {
+                      label: query.azureCostAnalysis.subscriptionId,
+                      value: query.azureCostAnalysis.subscriptionId,
+                    }
+                  }
+                  allowCustomValue
+                  options={this.state.AzureSubscriptions}
+                  defaultValue={query.azureCostAnalysis.subscriptionId}
+                  onChange={this.onACASubscriptionIDChange}
+                />
+              </div>
+            </div>
           </div>
         </div>
+      );
+    } else if (query.azureCostAnalysis.scope === 'ManagementGroup') {
+      ScopeId = (
+        <div>
+          <div className="gf-form-inline">
+            <div className="gf-form">
+              <div className="gf-form gf-form--grow">
+                <label className="gf-form-label width-12" title="Management Group ID">
+                  Management group ID
+                </label>
+                <input
+                  className="gf-form-input width-24"
+                  type="text"
+                  value={query.azureCostAnalysis.managementGroupId}
+                  placeholder="Management Group ID"
+                  title="Management Group ID"
+                  onChange={this.onACAManagementGroupNameChange}
+                ></input>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="gf-form-inline">
+          <div className="gf-form">
+            <div className="gf-form gf-form--grow">
+              <label className="gf-form-label width-12" title="Scope">
+                Scope
+              </label>
+              <Select
+                className="width-24"
+                value={Scopes.find((gran: any) => gran.value === query.azureCostAnalysis.scope)}
+                options={Scopes}
+                defaultValue={query.azureCostAnalysis.scope}
+                onChange={this.onACAScopeChange}
+              />
+            </div>
+          </div>
+        </div>
+        <div>{ScopeId}</div>
       </div>
     );
   }
