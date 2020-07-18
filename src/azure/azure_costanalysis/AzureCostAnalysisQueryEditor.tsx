@@ -89,7 +89,7 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
   render() {
     const { query } = this.props;
     let ScopeId;
-    let SubscriptionScopeId = (<div></div>);
+    let SubscriptionScopeId = <div></div>;
     if (query.azureCostAnalysis.scope === 'ResourceGroup') {
       SubscriptionScopeId = (
         <div className="gf-form gf-form--grow">
@@ -105,7 +105,7 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
             onChange={this.onACAResourceGroupNameChange}
           ></input>
         </div>
-      )
+      );
     }
     if (query.azureCostAnalysis.scope === 'Subscription' || query.azureCostAnalysis.scope === 'ResourceGroup') {
       ScopeId = (
