@@ -7,8 +7,9 @@ import { AzureSubscription } from './../azure_subscription/AzureSubscription';
 import { AzureCostQueryStructure } from './AzureCostAnalysis';
 
 const Scopes: SelectableValue[] = [
-  { value: 'Subscription', label: 'Subscription' },
   { value: 'ManagementGroup', label: 'Management Group' },
+  { value: 'Subscription', label: 'Subscription' },
+  { value: 'ResourceGroup', label: 'ResourceGroup' },
 ];
 const Granularities: SelectableValue[] = [
   { value: 'None', label: 'None' },
@@ -66,6 +67,13 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
     azCostAnalysis.managementGroupId = MGGroupName;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
+  onACAResourceGroupNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const ResourceGroupName = event.target.value;
+    const { query, onChange } = this.props;
+    const azCostAnalysis: any = query.azureCostAnalysis;
+    azCostAnalysis.resourceGroupName = ResourceGroupName;
+    onChange({ ...query, azureCostAnalysis: azCostAnalysis });
+  };
   componentWillMount() {
     if (this.state.AzureSubscriptions.length === 0) {
       const az: AzureConnection = new AzureConnection(this.props.datasource.instanceSettings);
@@ -81,7 +89,25 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
   render() {
     const { query } = this.props;
     let ScopeId;
-    if (query.azureCostAnalysis.scope === 'Subscription') {
+    let SubscriptionScopeId = (<div></div>);
+    if (query.azureCostAnalysis.scope === 'ResourceGroup') {
+      SubscriptionScopeId = (
+        <div className="gf-form gf-form--grow">
+          <label className="gf-form-label width-12" title="Resource Group Name">
+            Resource Group
+          </label>
+          <input
+            className="gf-form-input width-24"
+            type="text"
+            value={query.azureCostAnalysis.resourceGroupName}
+            placeholder="Resource Group Name"
+            title="Resource Group Name"
+            onChange={this.onACAResourceGroupNameChange}
+          ></input>
+        </div>
+      )
+    }
+    if (query.azureCostAnalysis.scope === 'Subscription' || query.azureCostAnalysis.scope === 'ResourceGroup') {
       ScopeId = (
         <div>
           <div className="gf-form-inline">
@@ -104,6 +130,7 @@ class AzureCostAnalysisSubscriptionIdQuery extends PureComponent<any, any> {
                   onChange={this.onACASubscriptionIDChange}
                 />
               </div>
+              {SubscriptionScopeId}
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { AzureConnection } from '../azure_connection/AzureConnection';
 import { AzureCostAnalysisResultsParser } from './AzureCostAnalysisResultsParser';
 import { doBackendRequest } from '../../app/utils';
 
-type AzureScopeType = 'ManagementGroup' | 'Subscription';
+type AzureScopeType = 'ManagementGroup' | 'Subscription' | 'ResourceGroup';
 
 interface AzureCostAnalysisGrouping {
   type: string;
@@ -23,6 +23,7 @@ export interface AzureCostQueryStructure {
   managementGroupId: string;
   subscriptionId: string;
   subscriptionName?: string;
+  resourceGroupName: string;
   granularity: string;
   grouping: AzureCostAnalysisGrouping[];
   filters: AzureCostAnalysisFilter[];
@@ -35,6 +36,7 @@ export const DEFAULT_COST_QUERY: AzureCostQueryStructure = {
   managementGroupId: '',
   subscriptionId: '',
   subscriptionName: '',
+  resourceGroupName: '',
   granularity: 'Daily',
   grouping: [{ type: 'None', name: 'None' }],
   filters: [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }],
@@ -74,8 +76,12 @@ export class AzureCostAnalysisQuery extends AzureMonitorPluginQuery {
     this.granularity = templateSrv.replace(item.granularity || 'Monthly', options.scopedVars);
     this.rawquery = item;
     this.rawquery.alias = templateSrv.replace(this.rawquery.alias, options.scopedVars);
-    if (this.rawquery.scope === 'ManagementGroup') {
+    if (this.rawquery.scope === 'Subscription') {
+      this.scope = templateSrv.replace(`/subscriptions/${item.subscriptionId}`, options.scopedVars);
+    } else if (this.rawquery.scope === 'ManagementGroup') {
       this.scope = templateSrv.replace(`/providers/Microsoft.Management/managementGroups/${item.managementGroupId}`, options.scopedVars);
+    } else if (this.rawquery.scope === 'ResourceGroup') {
+      this.scope = templateSrv.replace(`/subscriptions/${item.subscriptionId}/resourceGroups/${item.resourceGroupName}`, options.scopedVars);
     }
     let grouping = [];
     grouping = item.grouping && item.grouping.length > 0 ? item.grouping : [{ type: 'Dimension', name: 'ServiceName' }];
