@@ -471,7 +471,7 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
     );
   }
 }
-class AzureCostAnalysisAliasyQuery extends PureComponent<any> {
+class AzureCostAnalysisAliasQuery extends PureComponent<any> {
   onACAAliasChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { query, onChange } = this.props;
     const azCostAnalysis: AzureCostQueryStructure = query.azureCostAnalysis;
@@ -504,7 +504,7 @@ export class AzureCostAnalysisQueryEditor extends PureComponent<any> {
         <AzureCostAnalysisGranularityQuery query={query} onChange={onChange}></AzureCostAnalysisGranularityQuery>
         <AzureCostAnalysisGroupingQuery query={query} onChange={onChange}></AzureCostAnalysisGroupingQuery>
         <AzureCostAnalysisFilterQuery query={query} onChange={onChange}></AzureCostAnalysisFilterQuery>
-        <AzureCostAnalysisAliasyQuery query={query} onChange={onChange}></AzureCostAnalysisAliasyQuery>
+        <AzureCostAnalysisAliasQuery query={query} onChange={onChange}></AzureCostAnalysisAliasQuery>
       </div>
     );
   }
