@@ -1,19 +1,20 @@
 {
-  "name": "Azure Monitor - Extras",
-  "id": "yesoreyeram-grafana-azure-datasource",
+  "name": "Azure Plus",
+  "id": "yesoreyeram-azure-datasource",
   "type": "datasource",
   "category": "cloud",
   "metrics": true,
   "info": {
-    "version": "0.0.6",
-    "description": "Grafana Azure Monitor DataSource - Extras",
+    "version": "%VERSION%",
+    "updated": "%TODAY%",
+    "description": "Azure Plus datasource",
     "author": {
       "name": "Sriramajeyam Sugumaran",
       "url": "https://www.google.com/search?q=Sriramajeyam+Sugumaran"
     },
     "logos": {
-      "small": "img/yesoreyeram-grafana-azure-datasource-logo.jpg",
-      "large": "img/yesoreyeram-grafana-azure-datasource-logo.jpg"
+      "small": "img/yesoreyeram-azure-datasource-logo.jpg",
+      "large": "img/yesoreyeram-azure-datasource-logo.jpg"
     },
     "keywords": [
       "azure",
@@ -35,6 +36,13 @@
     "grafanaVersion": "5.2.x",
     "plugins": []
   },
+  "includes": [
+    {
+      "type": "dashboard",
+      "name": "Azure Cost - By Subscription",
+      "path": "dashboards/azure-cost-by-subscription.json"
+    }
+  ],
   "routes": [
     {
       "path": "azuremonitor",

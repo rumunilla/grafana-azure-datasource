@@ -1,8 +1,8 @@
-# Grafana Azure Monitor - Extras
+# Grafana Azure Plus Datasource
 
 ![Build & Publish](https://github.com/yesoreyeram/grafana-azure-datasource/workflows/Build%20&%20Publish/badge.svg?branch=master)
 
-Grafana Azure monitor extras plugin provides additional azure capabilities to grafana.
+Grafana **Azure plus** datasource plugin provides additional azure capabilities to grafana. For examples and screenshots, refer [here](https://github.com/yesoreyeram/grafana-azure-datasource/issues/5).
 
 ## Features
 
@@ -24,14 +24,14 @@ There are multiple ways to install this plugin
 
 #### Download and extract zip file
 
-Download the zip file from [github](https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip) and extract into your grafana's plugin folder. Then restart Grafana.
+Download the zip file from [github](https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip) and extract into your grafana plugin folder. Then restart Grafana.
 
 #### Using grafana-cli
 
 If you are using grafana-cli, execute the following command to install the plugin
 
 ```
-grafana-cli --pluginUrl https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip plugins install yesoreyeram-grafana-azure-datasource
+grafana-cli --pluginUrl https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip plugins install yesoreyeram-azure-datasource
 ```
 #### Using helm chart
 
@@ -39,7 +39,7 @@ If you use help chart to provision grafana, use the following config to install 
 
 ```
 plugins:
-  - https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip;yesoreyeram-grafana-azure-datasource
+  - https://github.com/yesoreyeram/grafana-azure-datasource/archive/master.zip;yesoreyeram-azure-datasource
 ```
 
 ## Configuration
@@ -55,7 +55,7 @@ apiVersion: 1
 
 datasources:
 - name: <Datasource Name>
-  type: yesoreyeram-grafana-azure-datasource
+  type: yesoreyeram-azure-datasource
   access: proxy
   isDefault: false
   jsonData:
@@ -77,3 +77,22 @@ The client which connects to azure should have the following permissions.
 In case, if you are using the cost analysis services alone, provide only the following roles to the client
 
 * [Cost Management Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#cost-management-reader)
+
+## Dashboards Included
+
+For convenience, following sample dashboards are included in the plugin
+
+* Azure Cost - By Subscription
+
+If you want to share your dashboards to the community, Create a pull request with the dashboard json.
+
+## Template Variables
+
+Following template variable queries are supported
+
+- `Subscriptions()`
+- `ResourceGraph(YOUR RESOURCE GRAPH QUERY GOES HERE)`
+
+If the Resource graph query return two column, first column will be considered as display value and the second column will be considered as actual value. 
+
+Sample template variable queries are given [here](https://github.com/yesoreyeram/grafana-azure-datasource/issues/5#issuecomment-666500009).

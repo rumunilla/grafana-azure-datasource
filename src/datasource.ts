@@ -14,6 +14,7 @@ export class Datasource extends DataSourceApi {
   private azureLogAnalyticsDatasource: AzureLogAnalyticsDataSource;
   private azureConstAnalysisDatasource: AzureCostAnalysisDataSource;
   private azureServiceHealthDatasource: AzureServiceHealthDataSource;
+
   /** @ngInject */
   constructor(private instanceSettings: any, private templateSrv: any) {
     super(instanceSettings);
@@ -84,12 +85,12 @@ export class Datasource extends DataSourceApi {
         const azureConnection = new AzureConnection(this.instanceSettings);
         const result = await azureConnection.getSubscriptions();
         if (result && result.length > 0) {
-          resolve({ message: 'Successfully Connected Azure Monitor', status: 'success' });
+          resolve({ message: `Successfully Connected Azure Monitor. ${result.length} subscriptions found.`, status: 'success' });
         } else {
-          reject({ message: 'Failed to retrieve subscriptions', status: 'error' });
+          reject({ message: `Failed to connect.`, status: 'error' });
         }
       } catch (error) {
-        reject({ message: 'Failed to Connect', status: 'error' });
+        reject({ message: `Failed to Connect.`, status: 'error' });
       }
     });
   }

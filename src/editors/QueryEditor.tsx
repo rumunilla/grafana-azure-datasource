@@ -1,7 +1,6 @@
 import { defaults } from 'lodash';
 import React, { PureComponent } from 'react';
-import { QueryEditorProps, DataQuery, SelectableValue } from '@grafana/data';
-import { Select } from './../grafana_ui';
+import { QueryEditorProps, DataQuery, SelectableValue, Select } from './../grafana';
 import { Datasource } from './../datasource';
 import * as CONFIG from './../config';
 import {

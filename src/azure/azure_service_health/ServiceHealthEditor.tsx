@@ -1,7 +1,6 @@
 import { defaults } from 'lodash';
 import React, { PureComponent } from 'react';
-import { Select } from './../../grafana_ui';
-import { SelectableValue } from '@grafana/data';
+import { SelectableValue, Select } from '../../grafana';
 import { AzureConnection } from './../azure_connection/AzureConnection';
 import { AzureSubscription } from './../azure_subscription/AzureSubscription';
 import { ServiceHealthQueryStructure } from './ServiceHealth';

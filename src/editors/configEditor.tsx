@@ -1,9 +1,8 @@
 import React, { PureComponent, ChangeEvent } from 'react';
-import { DataSourcePluginOptionsEditorProps, DataSourceJsonData, SelectableValue } from '@grafana/data';
-import { Select } from './../grafana_ui';
+import { DataSourcePluginOptionsEditorProps, DataSourceJsonData, SelectableValue, Select } from '../grafana';
 import * as CONFIG from './../config';
 
-const supportedCloudnames = CONFIG.supportedCloudnames as SelectableValue[];
+const supportedCloudNames = CONFIG.supportedCloudNames as SelectableValue[];
 
 export interface AzureMonitorDataSourceOptions extends DataSourceJsonData {
   cloudName?: string;
@@ -56,7 +55,7 @@ export class AzureMonitorConfigEditor extends PureComponent<Props, State> {
     });
   };
 
-  onResetclientSecret = () => {
+  onResetClientSecret = () => {
     const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
@@ -74,7 +73,7 @@ export class AzureMonitorConfigEditor extends PureComponent<Props, State> {
   render() {
     const { options } = this.props;
     const secureJsonData = (options.secureJsonData || {}) as AzureMonitorSecureJsonData;
-    options.jsonData.cloudName = options.jsonData.cloudName || 'azuremonitor';
+    options.jsonData.cloudName = options.jsonData.cloudName || CONFIG.CloudNameAzurePublic;
     const { jsonData, secureJsonFields } = options;
 
     return (
@@ -85,8 +84,8 @@ export class AzureMonitorConfigEditor extends PureComponent<Props, State> {
           </label>
           <Select
             className="width-24"
-            value={supportedCloudnames.find((cloud: any) => cloud.value === jsonData.cloudName)}
-            options={supportedCloudnames}
+            value={supportedCloudNames.find((cloud: any) => cloud.value === jsonData.cloudName)}
+            options={supportedCloudNames}
             defaultValue={jsonData.cloudName}
             onChange={this.onCloudNameChange}
           />
@@ -123,7 +122,7 @@ export class AzureMonitorConfigEditor extends PureComponent<Props, State> {
             {((secureJsonFields && secureJsonFields.clientSecret) as boolean) ? (
               <>
                 <label className="gf-form-label width-18">Configured</label>
-                <span className="gf-form-button btn btn-secondary width-6" onClick={this.onResetclientSecret}>
+                <span className="gf-form-button btn btn-secondary width-6" onClick={this.onResetClientSecret}>
                   Reset
                 </span>
               </>

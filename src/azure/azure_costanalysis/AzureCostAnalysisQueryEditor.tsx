@@ -1,7 +1,6 @@
 import { defaults } from 'lodash';
 import React, { PureComponent, ChangeEvent } from 'react';
-import { Select } from './../../grafana_ui';
-import { SelectableValue } from '@grafana/data';
+import { SelectableValue, Select } from '../../grafana';
 import { AzureConnection } from './../azure_connection/AzureConnection';
 import { AzureSubscription } from './../azure_subscription/AzureSubscription';
 import { AzureCostQueryStructure } from './AzureCostAnalysis';
@@ -11,7 +10,7 @@ const Scopes: SelectableValue[] = [
   { value: 'Subscription', label: 'Subscription' },
   { value: 'ResourceGroup', label: 'ResourceGroup' },
 ];
-const Granularities: SelectableValue[] = [
+const GranularityLevels: SelectableValue[] = [
   { value: 'None', label: 'None' },
   { value: 'Daily', label: 'Daily' },
   { value: 'Monthly', label: 'Monthly' },
@@ -199,8 +198,8 @@ class AzureCostAnalysisGranularityQuery extends PureComponent<any> {
             </label>
             <Select
               className="width-24"
-              value={Granularities.find((gran: any) => gran.value === query.azureCostAnalysis.granularity)}
-              options={Granularities}
+              value={GranularityLevels.find((gran: any) => gran.value === query.azureCostAnalysis.granularity)}
+              options={GranularityLevels}
               defaultValue={query.azureCostAnalysis.granularity}
               onChange={this.onACAGranularityChange}
             />
@@ -212,11 +211,11 @@ class AzureCostAnalysisGranularityQuery extends PureComponent<any> {
 }
 class AzureCostAnalysisGroupingQuery extends PureComponent<any> {
   onACAGroupingTypeChange = (groupingType: SelectableValue) => {
-    const gtype = groupingType.value;
+    const groupType = groupingType.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.grouping = azCostAnalysis.grouping || { type: 'Dimension', name: 'ServiceName' };
-    azCostAnalysis.grouping[0].type = gtype;
+    azCostAnalysis.grouping[0].type = groupType;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAGroupingNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -295,7 +294,7 @@ class AzureCostAnalysisGroupingQuery extends PureComponent<any> {
   }
 }
 class AzureCostAnalysisFilterQuery extends PureComponent<any> {
-  onACAFilteAdd = () => {
+  onACAFilterAdd = () => {
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
@@ -310,43 +309,43 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAFilterTypeChange = (event: SelectableValue, index: number) => {
-    const filtertype = event.value;
+    const filterType = event.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
-    azCostAnalysis.filters[index].FilterType = filtertype;
+    azCostAnalysis.filters[index].FilterType = filterType;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAFilterNameChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-    const filtername = event.target.value;
+    const filterName = event.target.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
-    azCostAnalysis.filters[index].Name = filtername;
+    azCostAnalysis.filters[index].Name = filterName;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAFilterNameChangeDimension = (event: SelectableValue, index: number) => {
-    const filtername = event.value;
+    const filterName = event.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
-    azCostAnalysis.filters[index].Name = filtername;
+    azCostAnalysis.filters[index].Name = filterName;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAFilterOperatorChange = (event: SelectableValue, index: number) => {
-    const operatorname = event.value;
+    const operatorName = event.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
-    azCostAnalysis.filters[index].Operator = operatorname;
+    azCostAnalysis.filters[index].Operator = operatorName;
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   onACAFilterValueChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-    const valuename = event.target.value;
+    const valueName = event.target.value;
     const { query, onChange } = this.props;
     const azCostAnalysis: any = query.azureCostAnalysis;
     azCostAnalysis.filters = azCostAnalysis.filters || [{ FilterType: 'None', Name: 'None', Operator: 'In', Values: [] }];
-    azCostAnalysis.filters[index].Values = valuename.split(',');
+    azCostAnalysis.filters[index].Values = valueName.split(',');
     onChange({ ...query, azureCostAnalysis: azCostAnalysis });
   };
   render() {
@@ -364,7 +363,7 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
             </div>
             <div className="gf-form">
               <div className="gf-form gf-form--grow">
-                <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilteAdd}>
+                <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilterAdd}>
                   Add Filter
                 </span>
               </div>
@@ -396,7 +395,7 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
                 <span>
                   <div className="gf-form">
                     <div className="gf-form gf-form--grow">
-                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilteAdd}>
+                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilterAdd}>
                         +
                       </span>
                       <span className="btn btn-danger btn-small" style={{ margin: '5px' }} onClick={() => this.onACAFilterRemove(index)}>
@@ -431,14 +430,14 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
                       <input
                         type="text"
                         className="gf-form-input width-12"
-                        title="Values; Comma seperated"
+                        title="Values; Comma separated"
                         placeholder="Values"
                         value={filter.Values.join(',')}
                         onChange={e => this.onACAFilterValueChange(e, index)}
                       ></input>
                     </div>
                     <div className="gf-form gf-form--grow">
-                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilteAdd}>
+                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilterAdd}>
                         +
                       </span>
                       <span className="btn btn-danger btn-small" style={{ margin: '5px' }} onClick={() => this.onACAFilterRemove(index)}>
@@ -474,14 +473,14 @@ class AzureCostAnalysisFilterQuery extends PureComponent<any> {
                       <input
                         type="text"
                         className="gf-form-input width-12"
-                        title="Tags; Comma seperated"
+                        title="Tags; Comma separated"
                         placeholder="Tags"
                         value={filter.Values.join(',')}
                         onChange={e => this.onACAFilterValueChange(e, index)}
                       ></input>
                     </div>
                     <div className="gf-form gf-form--grow">
-                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilteAdd}>
+                      <span className="btn btn-success btn-small" style={{ margin: '5px' }} onClick={this.onACAFilterAdd}>
                         +
                       </span>
                       <span className="btn btn-danger btn-small" style={{ margin: '5px' }} onClick={() => this.onACAFilterRemove(index)}>

@@ -9,7 +9,7 @@ assignees: ''
 
 **What you are struggling with**
 
-Descibe what assistance you need
+Describe what assistance you need
 
 **What you tried**
 
