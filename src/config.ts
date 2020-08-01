@@ -2,12 +2,14 @@ export const AzureResourceGraph = 'Azure Resource Graph';
 export const AzureApplicationInsights = `Azure Application Insights`;
 export const AzureLogAnalytics = `Azure Log Analytics`;
 export const AzureCostAnalysis = `Azure Cost Analysis`;
+export const AzurePolicyInsights = `Azure Policy Insights`;
 export const AzureServiceHealth = `Azure Service Health`;
 
 export const supportedServices: any[] = [
   { value: AzureResourceGraph, label: AzureResourceGraph },
   { value: AzureCostAnalysis, label: AzureCostAnalysis },
   { value: AzureServiceHealth, label: AzureServiceHealth },
+  { value: AzurePolicyInsights, label: AzurePolicyInsights },
   { value: AzureApplicationInsights, label: AzureApplicationInsights + ' - unstable' },
   { value: AzureLogAnalytics, label: AzureLogAnalytics + ' - unstable' },
 ];

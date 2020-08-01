@@ -8,6 +8,7 @@ Grafana **Azure plus** datasource plugin provides additional azure capabilities 
 
 * Azure Resource Graph
 * Azure Cost Analysis
+* Azure Policy Insights
 * Azure Service Health
 
 ### Azure Cost Analysis

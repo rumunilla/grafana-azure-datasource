@@ -1,6 +1,6 @@
 {
   "name": "grafana-azure-datasource",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Grafana Azure Plus Datasource",
   "main": "dist/module.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "azure resource graph",
     "azure cost analysis",
     "azure service health",
+    "azure policy insights",
     "appinsights",
     "application insights",
     "loganalytics"

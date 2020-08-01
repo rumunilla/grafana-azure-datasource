@@ -2,6 +2,10 @@
 
 Change history of the project. All the feature updates, bug fixes, breaking changes will be documented here.
 
+## [ 0.2.0]
+
+- Azure Policy Insights support
+
 ## [ 0.1.0 ]
 
 - First stable version

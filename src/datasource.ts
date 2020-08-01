@@ -5,6 +5,7 @@ import { AzureResourceGraphDataSource } from './azure/resource_graph/ResourceGra
 import { AzureApplicationInsightsDataSource } from './azure/application_insights/ApplicationInsights';
 import { AzureLogAnalyticsDataSource } from './azure/log_analytics/LogAnalytics';
 import { AzureCostAnalysisDataSource } from './azure/azure_costanalysis/AzureCostAnalysis';
+import { AzurePolicyInsightsDataSource } from './azure/policy_insights/PolicyInsights';
 import { AzureServiceHealthDataSource } from './azure/azure_service_health/ServiceHealth';
 import * as CONFIG from './config';
 
@@ -13,6 +14,7 @@ export class Datasource extends DataSourceApi {
   private azureApplicationInsightsDatasource: AzureApplicationInsightsDataSource;
   private azureLogAnalyticsDatasource: AzureLogAnalyticsDataSource;
   private azureConstAnalysisDatasource: AzureCostAnalysisDataSource;
+  private azurePolicyInsightsDatasource: AzurePolicyInsightsDataSource;
   private azureServiceHealthDatasource: AzureServiceHealthDataSource;
 
   /** @ngInject */
@@ -23,6 +25,7 @@ export class Datasource extends DataSourceApi {
     this.azureApplicationInsightsDatasource = new AzureApplicationInsightsDataSource(azureConnection, this.templateSrv);
     this.azureLogAnalyticsDatasource = new AzureLogAnalyticsDataSource(azureConnection, this.templateSrv);
     this.azureConstAnalysisDatasource = new AzureCostAnalysisDataSource(azureConnection, this.templateSrv);
+    this.azurePolicyInsightsDatasource = new AzurePolicyInsightsDataSource(azureConnection, this.templateSrv);
     this.azureServiceHealthDatasource = new AzureServiceHealthDataSource(azureConnection, this.templateSrv);
   }
 
@@ -69,6 +72,15 @@ export class Datasource extends DataSourceApi {
     azureCostAnalysisOptions.targets = filter(azureCostAnalysisOptions.targets, ['queryType', CONFIG.AzureCostAnalysis]);
     if (azureCostAnalysisOptions.targets.length > 0) {
       const acmPromise = this.azureConstAnalysisDatasource.query(azureCostAnalysisOptions);
+      if (acmPromise) {
+        promises.push(acmPromise);
+      }
+    }
+
+    const azurePolicyInsightsOptions = cloneDeep(options);
+    azurePolicyInsightsOptions.targets = filter(azurePolicyInsightsOptions.targets, ['queryType', CONFIG.AzurePolicyInsights]);
+    if (azurePolicyInsightsOptions.targets.length > 0) {
+      const acmPromise = this.azurePolicyInsightsDatasource.query(azurePolicyInsightsOptions);
       if (acmPromise) {
         promises.push(acmPromise);
       }
