@@ -1,6 +1,8 @@
 # Grafana Azure Plus Datasource
 
+[![License](https://img.shields.io/github/license/yesoreyeram/grafana-azure-datasource)](LICENSE)
 ![Build & Publish](https://github.com/yesoreyeram/grafana-azure-datasource/workflows/Build%20&%20Publish/badge.svg?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2f1d8e636d95e0712fae/maintainability)](https://codeclimate.com/github/yesoreyeram/grafana-azure-datasource/maintainability)
 
 Grafana **Azure plus** datasource plugin provides additional azure capabilities to grafana. For examples and screenshots, refer [here](https://github.com/yesoreyeram/grafana-azure-datasource/issues/5).
 
@@ -8,7 +10,7 @@ Grafana **Azure plus** datasource plugin provides additional azure capabilities 
 
 * Azure Resource Graph
 * Azure Cost Analysis
-* Azure Policy Insights
+* Azure Policy Insights ( Work in progress )
 * Azure Service Health
 
 ### Azure Cost Analysis

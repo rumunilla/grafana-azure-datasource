@@ -1,13 +1,15 @@
 {
     "cSpell.words": [
-        "grafana",
-        "azuremonitor",
         "appinsights",
-        "loganalytics",
-        "costanalysis",
+        "azuremonitor",
         "chinaazuremonitor",
+        "costanalysis",
         "germanyazuremonitor",
-        "govazuremonitor"
+        "govazuremonitor",
+        "grafana",
+        "loganalytics",
+        "plugincheck",
+        "vuepress"
     ],
     "cSpell.ignorePaths": [
         "src/dashboards/**"
