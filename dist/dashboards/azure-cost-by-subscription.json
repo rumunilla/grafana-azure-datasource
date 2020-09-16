@@ -101,7 +101,7 @@
                 ]
               },
               "title": "This month spend",
-              "unit": "currencyGBP"
+              "unit": "currencyUSD"
             },
             "overrides": [],
             "values": false
@@ -183,7 +183,7 @@
                 ]
               },
               "title": "Average daily spend",
-              "unit": "currencyGBP"
+              "unit": "currencyUSD"
             },
             "overrides": [],
             "values": false
@@ -265,7 +265,7 @@
                 ]
               },
               "title": "Today's spend",
-              "unit": "currencyGBP"
+              "unit": "currencyUSD"
             },
             "overrides": [],
             "values": false
@@ -425,7 +425,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
@@ -552,7 +552,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
@@ -1111,7 +1111,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
@@ -1142,7 +1142,7 @@
         },
         "datasource": "-- Dashboard --",
         "fontSize": "80%",
-        "format": "currencyGBP",
+        "format": "currencyUSD",
         "gridPos": {
           "h": 10,
           "w": 6,
@@ -1279,7 +1279,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
@@ -1404,7 +1404,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
@@ -1529,7 +1529,7 @@
         "yaxes": [
           {
             "decimals": 0,
-            "format": "currencyGBP",
+            "format": "currencyUSD",
             "label": "",
             "logBase": 1,
             "max": null,
